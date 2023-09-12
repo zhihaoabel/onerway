@@ -31,11 +31,10 @@ public class StringUtil {
      * @param contentMap the map containing the key-value pairs to concatenate
      * @return a string containing the concatenated non-empty values from the map
      */
-    public static String concatValue(Map<String, String> contentMap) {
+    public static String concatValue(Map<String, Object> contentMap) {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : contentMap.entrySet()) {
-            if (StringUtil.isNotEmpty(entry.getValue())) {
-                sb.append(entry.getValue());
+        for (Map.Entry<String, Object> entry : contentMap.entrySet()) {
+            if (StringUtil.isNotEmpty((String) entry.getKey())) {
                 sb.append(entry.getValue());
             }
         }
