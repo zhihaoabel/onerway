@@ -60,7 +60,7 @@ public class CryptoUtilTests {
         TreeMap<String, Object> data = new TreeMap<>();
         data.put("billingInformation", "{\"country\":\"US\",\"email\":\"test@qq.com\"}");
         data.put("merchantNo", "800209");
-        data.put("merchantTxnId", "1654675447651");
+        data.put("merchantTxnId", "1654675447652");
         data.put("merchantTxnTime", "2022-03-08 16:04:07");
         data.put("merchantTxnTimeZone", "+08:00");
         data.put("orderAmount", "35");
