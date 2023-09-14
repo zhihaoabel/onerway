@@ -8,6 +8,10 @@ import java.util.TreeMap;
 @SpringBootTest
 public class CryptoUtilTests {
 
+
+    // TODO: 请将privateKey替换为自己测试账号的密钥
+    final String privateKey = "59c5b49a58c74340b28ecc68004e815a";
+
     @Test
     void testHash() {
         String message = "Hello, world!";
@@ -40,7 +44,7 @@ public class CryptoUtilTests {
                 "  \"txnType\":\"SALE\",\n" +
                 "}";
         TreeMap<String, Object> map = (TreeMap<String, Object>) JsonUtil.json2Map(json);
-        String hash = CryptoUtil.hash(StringUtil.concatValue(map), "59c5b49a58c74340b28ecc68004e815a");
+        String hash = CryptoUtil.hash(StringUtil.concatValue(map), privateKey);
         System.out.println("hash = " + hash);
     }
 
@@ -68,7 +72,7 @@ public class CryptoUtilTests {
         data.put("txnOrderMsg", "{\"appId\":\"1700077023031386112\",\"returnUrl\":\"http://v1-demo.test.com/\",\"products\":\"[{\\\"price\\\":\\\"110.00\\\",\\\"num\\\":\\\"1\\\",\\\"name\\\":\\\"iphone11\\\",\\\"currency\\\":\\\"USD\\\"}]\"}");
         data.put("txnType", "SALE");
 
-        String hash = CryptoUtil.hash(StringUtil.concatValue(data), "59c5b49a58c74340b28ecc68004e815a");
+        String hash = CryptoUtil.hash(StringUtil.concatValue(data), privateKey);
         System.out.println("hash = " + hash);
     }
 
@@ -98,7 +102,7 @@ public class CryptoUtilTests {
                 "}";
 
         TreeMap<String, Object> data = (TreeMap<String, Object>) JsonUtil.json2Map(json);
-        String hash = CryptoUtil.hash(StringUtil.concatValue(data), "59c5b49a58c74340b28ecc68004e815a");
+        String hash = CryptoUtil.hash(StringUtil.concatValue(data), privateKey);
         System.out.println("hash = " + hash);
     }
 
@@ -129,7 +133,7 @@ public class CryptoUtilTests {
                 "}";
 
         TreeMap<String, Object> data = (TreeMap<String, Object>) JsonUtil.json2Map(json);
-        String hash = CryptoUtil.hash(StringUtil.concatValue(data), "59c5b49a58c74340b28ecc68004e815a");
+        String hash = CryptoUtil.hash(StringUtil.concatValue(data), privateKey);
         System.out.println("hash = " + hash);
     }
 
