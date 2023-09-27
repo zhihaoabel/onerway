@@ -10,7 +10,7 @@ public class CryptoUtilTests {
 
 
     // TODO: 请将privateKey替换为自己测试账号的密钥
-    final String privateKey = "59c5b49a58c74340b28ecc68004e815a";
+    String privateKey = "59c5b49a58c74340b28ecc68004e815a";
 
     @Test
     void testHash() {
@@ -60,7 +60,7 @@ public class CryptoUtilTests {
         TreeMap<String, Object> data = new TreeMap<>();
         data.put("billingInformation", "{\"country\":\"US\",\"email\":\"test@qq.com\"}");
         data.put("merchantNo", "800209");
-        data.put("merchantTxnId", "1654675447652");
+        data.put("merchantTxnId", "1654675447654");
         data.put("merchantTxnTime", "2022-03-08 16:04:07");
         data.put("merchantTxnTimeZone", "+08:00");
         data.put("orderAmount", "35");
@@ -87,7 +87,7 @@ public class CryptoUtilTests {
     void doTransaction() {
         String json = "{\n" +
                 "  \"merchantNo\": \"800209\",\n" +
-                "  \"merchantTxnId\": \"1640229747906\",\n" +
+                "  \"merchantTxnId\": \"1640229747908\",\n" +
                 "  \"merchantTxnTime\": \"2021-12-22 15:30:30\",\n" +
                 "  \"merchantTxnTimeZone\": \"+08:00\",\n" +
                 "  \"productType\": \"CARD\",\n" +
@@ -117,7 +117,7 @@ public class CryptoUtilTests {
     void doTransactionInJs() {
         String json = "{\n" +
                 "    \"merchantNo\": \"800209\",\n" +
-                "    \"merchantTxnId\": \"1654675447666\",\n" +
+                "    \"merchantTxnId\": \"1654675447668\",\n" +
                 "    \"merchantTxnTime\": null,\n" +
                 "    \"merchantTxnTimeZone\": null,\n" +
                 "    \"productType\": \"CARD\",\n" +
@@ -133,6 +133,36 @@ public class CryptoUtilTests {
                 "}";
 
         TreeMap<String, Object> data = (TreeMap<String, Object>) JsonUtil.json2Map(json);
+        String hash = CryptoUtil.hash(StringUtil.concatValue(data), privateKey);
+        System.out.println("hash = " + hash);
+    }
+
+    /**
+     * 两方接口支付-本地支付-Alipay+
+     */
+    @Test
+    void doAlipay() {
+        String json = "{\n" +
+                "  \"merchantNo\": \"800209\",\n" +
+                "  \"merchantTxnId\": \"16460431556919\",\n" +
+                "  \"merchantTxnTime\":\"2023-08-28 15:30:30\",\n" +
+                "  \"merchantTxnTimeZone\":\"+08:00\",\n" +
+                "  \"productType\":\"LPMS\",\n" +
+                "  \"subProductType\":\"DIRECT\",\n" +
+                "  \"txnType\": \"SALE\",\n" +
+                "  \"orderAmount\": \"20\",\n" +
+                "  \"paymentMode\": \"WAP\",\n" +
+                "  \"osType\": \"ANDROID\",\n" +
+                "  \"orderCurrency\":  \"USD\",\n" +
+                "  \"cardInfo\": \"{\\\"cardNumber\\\":\\\"4918190000000002\\\",\\\"cvv\\\":\\\"123\\\",\\\"month\\\":\\\"05\\\",\\\"year\\\":\\\"24\\\",\\\"holderName\\\":\\\"abel xx\\\"}\",\n" +
+                "  \"txnOrderMsg\": \"{\\\"returnUrl\\\":\\\"https://www.ronhan.com/\\\",\\\"products\\\":\\\"[{\\\\\\\"name\\\\\\\":\\\\\\\"iphone 11\\\\\\\",\\\\\\\"price\\\\\\\":\\\\\\\"5300.00\\\\\\\",\\\\\\\"num\\\\\\\":\\\\\\\"2\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"CNY\\\\\\\"}]\\\",\\\"transactionIp\\\":\\\"2600:1700:f0f1:1e30:d08f:c6da:976c:45cd\\\",\\\"appId\\\":1700077023031386112}\",\n" +
+                "  \"lpmsInfo\":\"{\\\"lpmsType\\\":\\\"Alipay+\\\",\\\"bankName\\\":\\\"\\\",\\\"iban\\\":\\\"\\\"}\",\n" +
+                "  \"shippingInformation\":\"{\\\"firstName\\\":\\\"da\\\",\\\"lastName\\\":\\\"xiong\\\",\\\"phone\\\":\\\"8522847000\\\",\\\"email\\\":\\\"shipping@example.com\\\",\\\"postalCode\\\":\\\"123456\\\",\\\"address\\\":\\\"HHHEEII\\\",\\\"country\\\":\\\"MY\\\",\\\"province\\\":\\\"BABA\\\",\\\"city\\\":\\\"BALALA\\\",\\\"street\\\":\\\"1010\\\",\\\"number\\\":\\\"20-1202\\\",\\\"identityNumber\\\":\\\"11112223333\\\",\\\"birthDate\\\":\\\"2020/12/28\\\"}\",\n" +
+                "  \"billingInformation\":\"{\\\"firstName\\\":\\\"José\\\",\\\"lastName\\\":\\\"Silva\\\",\\\"phone\\\":\\\"8522847035\\\",\\\"email\\\":\\\"jose@example.com\\\",\\\"postalCode\\\":\\\"61919-230\\\",\\\"address\\\":\\\"Rua E\\\",\\\"country\\\":\\\"BR\\\",\\\"province\\\":\\\"CE\\\",\\\"city\\\":\\\"Maracanaú\\\",\\\"street\\\":\\\"1040\\\",\\\"identityNumber\\\":\\\"853.513.468-93\\\",\\\"birthDate\\\":\\\"2000/12/20\\\"}\"\n" +
+                "}";
+
+        TreeMap<String, Object> data = (TreeMap<String, Object>) JsonUtil.json2Map(json);
+//        privateKey = "b2195d4b09b14b2691083c50b5120e7e";
         String hash = CryptoUtil.hash(StringUtil.concatValue(data), privateKey);
         System.out.println("hash = " + hash);
     }
