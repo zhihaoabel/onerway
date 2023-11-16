@@ -57,22 +57,25 @@ public class CryptoUtilTests {
      */
     @Test
     void doPayment() {
-        TreeMap<String, Object> data = new TreeMap<>();
-        data.put("billingInformation", "{\"country\":\"US\",\"email\":\"test@qq.com\"}");
-        data.put("merchantNo", "800209");
-        data.put("merchantTxnId", "1654675447654");
-        data.put("merchantTxnTime", "2022-03-08 16:04:07");
-        data.put("merchantTxnTimeZone", "+08:00");
-        data.put("orderAmount", "35");
-        data.put("orderCurrency", "USD");
-        data.put("productType", "CARD");
-        data.put("cardInfo", "{\"holderName\":\"CL BRW2\"}");
-        data.put("shippingInformation", "{\"country\":\"US\",\"email\":\"test@qq.com\"}");
-        data.put("subProductType", "DIRECT");
-        data.put("txnOrderMsg", "{\"appId\":\"1700077023031386112\",\"returnUrl\":\"http://v1-demo.test.com/\",\"products\":\"[{\\\"price\\\":\\\"110.00\\\",\\\"num\\\":\\\"1\\\",\\\"name\\\":\\\"iphone11\\\",\\\"currency\\\":\\\"USD\\\"}]\"}");
-        data.put("txnType", "SALE");
+        String json = "{\n" +
+                "    \"billingInformation\": \"{\\\"country\\\":\\\"US\\\",\\\"email\\\":\\\"test@qq.com\\\"}\",\n" +
+                "    \"cardInfo\": \"{\\\"holderName\\\":\\\"CL BRW2\\\"}\",\n" +
+                "    \"merchantNo\": \"800209\",\n" +
+                "    \"merchantTxnId\": \"1654675448000\",\n" +
+                "    \"merchantTxnTime\": \"2022-03-08 16:04:07\",\n" +
+                "    \"merchantTxnTimeZone\": \"+08:00\",\n" +
+                "    \"orderAmount\": \"35\",\n" +
+                "    \"orderCurrency\": \"USD\",\n" +
+                "    \"productType\": \"CARD\",\n" +
+                "    \"shippingInformation\":  \"{\\\"country\\\":\\\"US\\\",\\\"email\\\":\\\"test@qq.com\\\"}\",\n" +
+                "    \"subProductType\": \"DIRECT\",\n" +
+                "    \"txnOrderMsg\": \"{\\\"appId\\\":\\\"1700077023031386112\\\",\\\"returnUrl\\\":\\\"http://v1-demo.test.com/\\\",\\\"products\\\":\\\"[{\\\\\\\"price\\\\\\\":\\\\\\\"110.00\\\\\\\",\\\\\\\"num\\\\\\\":\\\\\\\"1\\\\\\\",\\\\\\\"name\\\\\\\":\\\\\\\"iphone11\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"USD\\\\\\\"}]\\\"}\",\n" +
+                "    \"txnType\": \"SALE\",\n" +
+                "    \"sign\": \"77a006d502cd8c7f265640962bb330f25406468da635d660aaf13a11f49c640c\"\n" +
+                "}";
 
-        String hash = CryptoUtil.hash(StringUtil.concatValue(data), privateKey);
+        TreeMap<String, Object> data2 = (TreeMap<String, Object>) JsonUtil.json2Map(json);
+        String hash = CryptoUtil.hash(StringUtil.concatValue(data2), privateKey);
         System.out.println("hash = " + hash);
     }
 
@@ -87,7 +90,7 @@ public class CryptoUtilTests {
     void doTransaction() {
         String json = "{\n" +
                 "  \"merchantNo\": \"800209\",\n" +
-                "  \"merchantTxnId\": \"1640229747908\",\n" +
+                "  \"merchantTxnId\": \"1640229747910\",\n" +
                 "  \"merchantTxnTime\": \"2021-12-22 15:30:30\",\n" +
                 "  \"merchantTxnTimeZone\": \"+08:00\",\n" +
                 "  \"productType\": \"CARD\",\n" +
@@ -117,19 +120,18 @@ public class CryptoUtilTests {
     void doTransactionInJs() {
         String json = "{\n" +
                 "    \"merchantNo\": \"800209\",\n" +
-                "    \"merchantTxnId\": \"1654675447668\",\n" +
+                "    \"merchantTxnId\": \"363722844551\",\n" +
                 "    \"merchantTxnTime\": null,\n" +
                 "    \"merchantTxnTimeZone\": null,\n" +
                 "    \"productType\": \"CARD\",\n" +
                 "    \"subProductType\": \"DIRECT\",\n" +
                 "    \"txnType\": \"SALE\",\n" +
-                "    \"orderAmount\": \"22.1\",\n" +
+                "    \"orderAmount\": \"26.1\",\n" +
                 "    \"orderCurrency\": \"USD\",\n" +
-                "    \"originTransactionId\": null,\n" +
-                "    \"risk3dsStrategy\": null,\n" +
-                "    \"txnOrderMsg\": \"{\\\"returnUrl\\\":\\\"https://www.ronhan.com/\\\",\\\"products\\\":\\\"[{\\\\\\\"name\\\\\\\":\\\\\\\"iphone 11\\\\\\\",\\\\\\\"price\\\\\\\":\\\\\\\"5300.00\\\\\\\",\\\\\\\"num\\\\\\\":\\\\\\\"2\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"CNY\\\\\\\"},{\\\\\\\"name\\\\\\\":\\\\\\\"macBook\\\\\\\",\\\\\\\"price\\\\\\\":\\\\\\\"1234.00\\\\\\\",\\\\\\\"num\\\\\\\":\\\\\\\"1\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"USD\\\\\\\"}]\\\",\\\"transactionIp\\\":\\\"127.0.0.1\\\",\\\"appId\\\":1700077023031386112,\\\"javaEnabled\\\":false,\\\"colorDepth\\\":\\\"24\\\",\\\"screenHeight\\\":\\\"1080\\\",\\\"screenWidth\\\":\\\"1920\\\",\\\"timeZoneOffset\\\":\\\"-480\\\",\\\"accept\\\":\\\"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\\\",\\\"userAgent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\\\",\\\"contentLength\\\":\\\"340\\\",\\\"language\\\":null}\",\n" +
-                "    \"shippingInformation\": \"{\\\"firstName\\\":\\\"Shipping\\\",\\\"lastName\\\":\\\"Name\\\",\\\"phone\\\":\\\"188888888888\\\",\\\"email\\\":\\\"taoyun15@gmail.com\\\",\\\"postalCode\\\":\\\"888888\\\",\\\"address\\\":\\\"Shipping Address Test\\\",\\\"country\\\":\\\"CN\\\",\\\"province\\\":\\\"HB\\\",\\\"city\\\":\\\"WH\\\",\\\"street\\\":\\\"833 Cheung Sha Wan Road\\\",\\\"number\\\":\\\"1\\\",\\\"identityNumber\\\":\\\"82962612865\\\"}\",\n" +
-                "    \"billingInformation\": \"{\\\"firstName\\\":\\\"test\\\",\\\"lastName\\\":\\\"test\\\",\\\"phone\\\":\\\"18600000000\\\",\\\"email\\\":\\\"taoyun15@gmail.com\\\",\\\"postalCode\\\":\\\"430000\\\",\\\"address\\\":\\\"Unit 1113, 11/F, Tower 2, Cheung Sha Wan Plaza, 833 Cheung Sha Wan Road, Lai Chi Kok\\\",\\\"country\\\":\\\"CN\\\",\\\"province\\\":\\\"HB\\\",\\\"city\\\":\\\"HK\\\"}\"\n" +
+                "    \"txnOrderMsg\": \"{\\\"returnUrl\\\":\\\"https://www.ronhan.com/\\\",\\\"notifyUrl\\\":\\\"https://www.ronhan.com/\\\",\\\"products\\\":\\\"[{\\\\\\\"name\\\\\\\":\\\\\\\"iphone 11\\\\\\\",\\\\\\\"price\\\\\\\":\\\\\\\"5300.00\\\\\\\",\\\\\\\"num\\\\\\\":\\\\\\\"2\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"CNY\\\\\\\"},{\\\\\\\"name\\\\\\\":\\\\\\\"macBook\\\\\\\",\\\\\\\"price\\\\\\\":\\\\\\\"1234.00\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"USD\\\\\\\"}]\\\",\\\"transactionIp\\\":\\\"127.0.0.1\\\",\\\"appId\\\":1700077023031386112}\",\n" +
+                "    \"shippingInformation\": \"{\\\"firstName\\\":\\\"\\\",\\\"lastName\\\":\\\"\\\",\\\"phone\\\":\\\"\\\",\\\"email\\\":\\\"taoyun15@gmail.com\\\",\\\"postalCode\\\":\\\"\\\",\\\"address\\\":\\\"\\\",\\\"country\\\":\\\"US\\\",\\\"province\\\":\\\"\\\",\\\"city\\\":\\\"\\\"}\",\n" +
+                "    \"billingInformation\": \"{\\\"firstName\\\":\\\"\\\",\\\"lastName\\\":\\\"\\\",\\\"phone\\\":\\\"\\\",\\\"email\\\":\\\"taoyun15@gmail.com\\\",\\\"postalCode\\\":\\\"\\\",\\\"address\\\":\\\"\\\",\\\"country\\\":\\\"US\\\",\\\"province\\\":\\\"\\\",\\\"city\\\":\\\"\\\"}\",\n" +
+                "    \"sign\": \"1fb0c1908b3abc17b088a67629e7872edda34a5ea84fad84277ae49d8215cfda\"\n" +
                 "}";
 
         TreeMap<String, Object> data = (TreeMap<String, Object>) JsonUtil.json2Map(json);
@@ -167,4 +169,52 @@ public class CryptoUtilTests {
         System.out.println("hash = " + hash);
     }
 
+    // Klarna生成签名
+    @Test
+    void doKlarna() {
+        String json = "{\n" +
+                "    \"notifyType\": \"TXN\",\n" +
+                "    \"transactionId\": \"1712358342208745472\",\n" +
+                "    \"txnType\": \"SALE\",\n" +
+                "    \"merchantNo\": \"800215\",\n" +
+                "    \"merchantTxnId\": \"231012144327350_10121443361299\",\n" +
+                "    \"responseTime\": \"2023-10-12 14:44:06\",\n" +
+                "    \"txnTime\": \"2023-10-12 14:43:37\",\n" +
+                "    \"txnTimeZone\": \"+08:00\",\n" +
+                "    \"orderAmount\": \"56.04\",\n" +
+                "    \"orderCurrency\": \"USD\",\n" +
+                "    \"settleRate\": \"1\",\n" +
+                "    \"txnAmount\": \"56.04\",\n" +
+                "    \"txnCurrency\": \"USD\",\n" +
+                "    \"status\": \"S\",\n" +
+                "    \"reason\": \"{\\\"respCode\\\":\\\"20000\\\",\\\"respMsg\\\":\\\"Success\\\"}\"\n" +
+                "}";
+
+        TreeMap<String, Object> data = (TreeMap<String, Object>) JsonUtil.json2Map(json);
+//        privateKey = "b2195d4b09b14b2691083c50b5120e7e";
+        String hash = CryptoUtil.hash(StringUtil.concatValue(data), "f9e3c7cf69444073887dc95c4c3ecd11");
+        System.out.println("hash = " + hash);
+    }
+
+    /**
+     * 查询交易
+     */
+    @Test
+    void queryTransaction() {
+        String json = "{\n" +
+                "  \"merchantNo\": \"800209\",\n" +
+                "  \"merchantTxnIds\": \"\",\n" +
+                "  \"transactionIds\": \"\",\n" +
+                "  \"txnTypes\": \"\",\n" +
+                "  \"startTime\": \"2023-09-01 00:00:00\",\n" +
+                "  \"endTime\": \"2023-10-30 00:00:00\",\n" +
+                "  \"current\": \"1\",\n" +
+                "  \"sign\": \"\"\n" +
+                "}";
+
+        TreeMap<String, Object> data = (TreeMap<String, Object>) JsonUtil.json2Map(json);
+//        privateKey = "b2195d4b09b14b2691083c50b5120e7e";
+        String hash = CryptoUtil.hash(StringUtil.concatValue(data), privateKey);
+        System.out.println("hash = " + hash);
+    }
 }

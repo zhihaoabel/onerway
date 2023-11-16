@@ -34,7 +34,7 @@ public class StringUtil {
     public static String concatValue(Map<String, Object> contentMap) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Object> entry : contentMap.entrySet()) {
-            if (StringUtil.isNotEmpty((String) entry.getKey())) {
+            if (StringUtil.isNotEmpty((String) entry.getKey()) && null != entry.getValue() && !"sign".equals(entry.getKey())) {
                 sb.append(entry.getValue());
             }
         }
